@@ -72,7 +72,20 @@ html * {
       box-shadow: 0 0 100px -10px #ff00dd;
     }
     to {
-      box-shadow: 0 0 5px 5px #ff00dd inset;
+      box-shadow: 0 0 2px 2px #ff00dd inset;
+    }
+  }
+
+  .simonColor:active {
+      animation: lightUp 2s;
+  }
+
+  @keyframes lightUp {
+    from {
+      box-shadow: 0 0 100px -10px #ffd000;
+    }
+    to {
+      box-shadow: 0 0 5px 5px #ffd000 inset;
     }
   }
   

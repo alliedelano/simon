@@ -17,23 +17,26 @@ let simonMoves;
 let playerMoves;
 let level;
   
+const gameBoard = document.getElementById('game-board');
 const blueButton = document.getElementById('blue');
 const greenButton = document.getElementById('green');
 const yellowButton = document.getElementById('yellow');
 const redButton = document.getElementById('red');
 const msgEl = document.getElementById('message');
 const levelEl = document.getElementById('levels');
+const buttonDiv = document.getElementById('play-button')
   
 blueButton.addEventListener('click', playerMove);
 greenButton.addEventListener('click', playerMove);
 yellowButton.addEventListener('click', playerMove);
 redButton.addEventListener('click', playerMove);
+
   
 function init(){
     console.log("let's set those state variables");
     simonMoves = [];
     playerMoves = [];
-    level = 1;
+    level = 0;
     playerChoice = null;
     render();
 }
@@ -41,17 +44,20 @@ function init(){
 function render(){
     console.log("let's make sure the view looks good to start the game!");
     msgEl.innerText = "hi, I'm Simon. wanna play?"
-    levelUp() //to create one level
-    createReadyButton()//to create 'sure!' button
+    levelUp()
+    const sureButton = document.createElement("BUTTON");
+    sureButton.id = 'ready';
+    buttonDiv.append(sureButton);
+    sureButton.innerText = 'sure!'
+    sureButton.addEventListener('click', letsPlay)
 };
 
 function createReadyButton(){
     const readyButton =  document.createElement("BUTTON");
     readyButton.id = 'ready';
-    const buttonDiv = document.getElementById('play-button');
     buttonDiv.append(readyButton);
-    readyButton.innerText = "sure!"
-    readyButton.addEventListener('click', letsPlay)
+    readyButton.innerText = 'ready!'
+    readyButton.addEventListener('click', simonMove);
 }
   
 function letsPlay(){
@@ -75,25 +81,74 @@ function simonMove(){
     simonChoice = choices[Math.floor(Math.random()*4)];
     simonMoves.push(simonChoice);
     playerMoves = [];
-    colorDisplay();
     //simonDisplays();
 }
 
+
+//if there isn't anything in simon's array and the user pushes buttons
+//maybe yell at the player with a heading?
+
+
 function colorDisplay(){
+    gameBoard.classList.remove('active');
+    playSound();
+
+
     for (move in simonMoves){
+        gameBoard.classList.remove('active')
+    }
+
+        }
+        if (!simonMoves.includes(move)){
+            let button = document.getElementById(move)
+            button.classList.add('active');
+        } else {
+            
+        }
+
+
+
+
+    
+    //resetAnimation() - find the ones that need to be reset
+    //timer
+   //for (move in simonMoves){
+      // var count = 0;
+      // if ()
+//   }
+
+
+      //  if (move in simonMoves){
+        //    resetAnimation();
+     //   } else {
+     //       console.log("hasn't come up yet!");
+   //     }
+   // }
+   // for (move in simonMoves){
         //play the sound
-        console.log(`playing ${controller[simonMoves[move]].tone}`)
-        //make it light up
-        console.log(`and animating ${simonMoves[move]} button`)
+        //console.log(`playing ${controller[simonMoves[move]].tone}`)
 
     }
-};
+// };
 
+function playSound(){
+    console.log(`playing ${controller[simonMoves[move]].tone}`);
+    let sound = controller[move].tone;
+    sound.play()
+    sound.currentTime=0
+}
 
 function simonDisplays(){
     console.log("Simon is making the game board change");
+    //timer function of colorDisplay() for each in order.
+    //make each one active in turn;
 
-}
+
+
+        }
+        setTimeout (colorDisplay, 2000);
+    }
+
   
   
 function playerMove(){
@@ -122,14 +177,20 @@ function compareMoves(){
 }
   
 function youLose(){
-    console.log("oh shit you weren't paying attention")
+    msgEl.innerText = "oh shit... you weren't paying attention";
+    //create replay button - init & render
+
 }
   
   function youDidIt(){
     console.log("sweet! winner! congrats and create ready button to make simon move again")
+    createReadyButton();
 }
   
 function levelUp(){
-    console.log("add one to the level display!")
+    let level = document.createElement('div');
+    level.setAttribute('class', 'level');
+    document.getElementById('levels').append(level);
+    level += 1;
 }
   
