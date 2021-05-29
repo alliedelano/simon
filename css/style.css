@@ -4,7 +4,6 @@ html * {
   }
   
   body {
-    height: 100vh;
     display: flex;
     flex-direction: column;
     background-color: #ECFFFF;
@@ -15,26 +14,28 @@ html * {
     flex-direction: column;
     justify-items: center;
     align-items: center;
-    margin: auto auto 50px auto;
-    flex-grow: 1;
+    margin: auto;
   }
   
   #ready, #sure, #replay {
+    background: white;
+    color: #ff00dd;
+    font-size: 25px;
     height: 50px;
     width: 150px;
     border-radius: 12px;
-    border: none;
-    background: #ff00dd;
+    border: #ff00dd 2px solid;
+  }
+
+  #play-button {
+    margin: 5vh auto 10vh auto;
     display: flex;
-    align-self: center;
-    justify-self: center;
-    color: white;
-    font-size: 30px;
-    margin: 0 auto 50px auto;
+    align-content: center;
   }
   
   #ready:hover, #sure:hover {
-    animation: glow 1s;
+    background: #ff00dd;
+    color: white;
   }
   
   #game-board {
@@ -48,7 +49,7 @@ html * {
   
   #game-board * {
     margin: 0;
-    padding: 3px;
+    padding: 5px;
   }
   
   .color {
@@ -71,10 +72,7 @@ html * {
   @keyframes glow {
     from {
       box-shadow: 0 0 100px -10px #ff00dd;
-    }
-    to {
-      box-shadow: 0 0 2px 2px #ff00dd inset;
-    }
+    } 
   }
 
   .active {
@@ -83,10 +81,7 @@ html * {
 
   @keyframes lightUp {
     from {
-      box-shadow: 0 0 100px -10px #ffd000;
-    }
-    to {
-      box-shadow: 0 0 2px 2px #ffd000 inset;
+      box-shadow: 0 0 100px -10px black;
     }
   }
   
@@ -109,6 +104,7 @@ html * {
     justify-content: center;
     align-items: center;
     flex-grow: 1;
+    margin: 5vh auto auto auto;
   }
   
   .level {

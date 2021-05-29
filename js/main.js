@@ -29,7 +29,6 @@ const levels = document.getElementById('levels');
 
   
 function init(){
-    console.log("let's set those state variables");
     simonMoves = [];
     playerMoves = [];
     level = 0;
@@ -37,7 +36,6 @@ function init(){
 }
   
 function render(){
-    console.log("let's make sure the view looks good to start the game!");
     msgEl.innerText = "hi, I'm Simon. wanna play?"
     levelUp()
     createSureButton()
@@ -84,10 +82,10 @@ function simonMove(){
                 moveEl.classList.remove('active');
             }
         }  
-    }, 500)
+    }, 500);
     setTimeout(function(){
         simonDisplays();
-    }, 500)
+    }, 1500);
 }
 
 function playSound(){
@@ -104,12 +102,12 @@ function simonDisplays(){
             moveElClasses = moveEl.classList;
             moveEl.classList.add('active');
             playSound();
-        }, 1000 * i, i)
+        }, 2000 * i, i)
     }
     setTimeout(function(){
         msgEl.innerText = 'your turn!'
         addButtonListeners();
-    }, 500);
+    }, 2000 * simonMoves.length);
 }
 
 function addButtonListeners(){
