@@ -22,6 +22,7 @@ html * {
     align-content: center;
     text-align: center;
     max-width: 70%;
+    margin-bottom: 2vh;
   }
   
   #ready, #sure, #replay {
@@ -36,7 +37,7 @@ html * {
   }
 
   #play-button {
-    margin: 5vh auto 5vh auto;
+    margin: 5vh auto 7vh auto;
     display: flex;
     align-content: center;
   }
