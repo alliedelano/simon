@@ -25,11 +25,6 @@ const redButton = document.getElementById('red');
 const msgEl = document.getElementById('message');
 const levelEl = document.getElementById('levels');
 const buttonDiv = document.getElementById('play-button')
-  
-blueButton.addEventListener('click', playerMove);
-greenButton.addEventListener('click', playerMove);
-yellowButton.addEventListener('click', playerMove);
-redButton.addEventListener('click', playerMove);
 
   
 function init(){
@@ -37,7 +32,6 @@ function init(){
     simonMoves = [];
     playerMoves = [];
     level = 0;
-    playerChoice = null;
     render();
 }
   
@@ -56,6 +50,15 @@ function createSureButton(){
     sureButton.addEventListener('click', letsPlay)
 }
 
+  
+function letsPlay(){
+    setTimeout(function(){
+        document.getElementById('sure').remove();
+        msgEl.innerText = "it's easy: watch me, then do what I do. ready?";
+        createReadyButton();
+    }, 500)
+};
+
 function createReadyButton(){
     const readyButton =  document.createElement("BUTTON");
     readyButton.id = 'ready';
@@ -63,42 +66,26 @@ function createReadyButton(){
     readyButton.innerText = 'ready!'
     readyButton.addEventListener('click', simonMove);
 }
-  
-function letsPlay(){
-    console.log("Let's play");
-    document.getElementById('sure').remove();
-    msgEl.innerText = "it's easy: watch me, then do what I do. ready?"
-    const readyButton =  document.createElement("BUTTON");
-    readyButton.id = 'ready';
-    buttonDiv.append(readyButton);
-    readyButton.innerText = 'ready!'
-    readyButton.addEventListener('click', simonMove);
-};
-////////breakdown point
 
   
 function simonMove(){
-    //readyButton.remove();
-    msgEl.innerText = "here I go..."
-    let choices = ['blue', 'green', 'yellow', 'red'];
-    simonChoice = choices[Math.floor(Math.random()*4)];
-    simonMoves.push(simonChoice);
-    playerMoves = [];
-    for(move in simonMoves){
-        moveEl = document.getElementById(simonMoves[move]);
-        moveElClasses = moveEl.classList;
-        if (moveElClasses.contains('active')){
-            moveEl.classList.remove('active');
-        }
-    }  
-    simonDisplays();
+    setTimeout(function(){
+        document.getElementById('ready').remove()
+        msgEl.innerText = "here I go..."
+        let choices = ['blue', 'green', 'yellow', 'red'];
+        simonChoice = choices[Math.floor(Math.random()*4)];
+        simonMoves.push(simonChoice);
+        playerMoves = [];
+        for(move in simonMoves){
+            moveEl = document.getElementById(simonMoves[move]);
+            moveElClasses = moveEl.classList;
+            if (moveElClasses.contains('active')){
+                moveEl.classList.remove('active');
+            }
+        }  
+        simonDisplays();
+    }, 500)
 }
-
-
-//if there isn't anything in simon's array and the user pushes buttons
-//maybe yell at the player with a heading?
-
-
 
 function playSound(){
     console.log(`playing ${controller[simonMoves[move]].tone}`);
@@ -108,10 +95,6 @@ function playSound(){
 }
 
 function simonDisplays(){
-    //console.log("Simon is making the game board change");
-    //timer function of colorDisplay() for each in order.
-    //make each one active in turn;
-
     for (i=0; i< simonMoves.length; i++){
         setTimeout(i=> {
             moveEl = document.getElementById(simonMoves[i]);
@@ -120,30 +103,41 @@ function simonDisplays(){
             playSound();
         }, 1000 * i, i)
     }
+    setTimeout(function(){
+        msgEl.innerText = 'your turn!'
+        addButtonListeners();
+    }, 500);
+}
+
+function addButtonListeners(){
+    blueButton.addEventListener('click', playerMove);
+    greenButton.addEventListener('click', playerMove);
+    yellowButton.addEventListener('click', playerMove);
+    redButton.addEventListener('click', playerMove);
+}
+
+function removeButtonListeners(){
+    blueButton.removeEventListener('click', playerMove);
+    greenButton.removeEventListener('click', playerMove);
+    yellowButton.removeEventListener('click', playerMove);
+    redButton.removeEventListener('click', playerMove)
 }
 
 function playerMove(){
-    //make the buttons click-able? QA would break this.
     playerMoves.push(this.id);
     compareMoves()
 }
   
 function compareMoves(){
-    console.log("Oooh let's see if each player move matches Simon's moves")
-    if (playerMoves === simonMoves){
-        youDidIt();
-    } else {
-        for (move in playerMoves){
-            if (playerMoves[move] === simonMoves[move]){
-                if (playerMoves.length === simonMoves.length){
-                    youDidIt();
-                } else {
-                    console.log("not long enough yet");
-                }
-            } else {
-                youLose();
-            }
+    for (move in playerMoves){
+        if (playerMoves[move] === simonMoves[move] && playerMoves.length != simonMoves.length){
+            console.log('not long enough yet!');
+        } else if (playerMoves[move] != simonMoves[move]) {
+            youLose();
         }
+    }
+    if (playerMoves[move] === simonMoves[move] && playerMoves.length === simonMoves.length){
+        youDidIt();
     }
 }
   
@@ -154,18 +148,22 @@ function youLose(){
     buttonDiv.append(replayButton);
     replayButton.innerText = 'replay!'
     replayButton.addEventListener('click', init);
+    removeButtonListeners();
 }
   
   function youDidIt(){
-    console.log("sweet! winner! congrats and create ready button to make simon move again")
-    msgEl.innerText = 'nice job! how about I make it trickier. ready?'
-    levelUp();
-    //createReadyButton();
+    setTimeout(function(){
+        msgEl.innerText = 'nice job! how about I make it trickier. ready?'
+        levelUp();
+        removeButtonListeners();
+        createReadyButton();
+    }, 500);
 }
   
 function levelUp(){
-    let level = document.createElement('div');
-    level.setAttribute('class', 'level');
-    document.getElementById('levels').append(level);
+    let levelIncrease = document.createElement('div');
+    levelIncrease.setAttribute('class', 'level');
+    document.getElementById('levels').append(levelIncrease);
     level += 1
-};
+    console.log(level)
+}
