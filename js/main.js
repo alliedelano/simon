@@ -45,12 +45,16 @@ function render(){
     console.log("let's make sure the view looks good to start the game!");
     msgEl.innerText = "hi, I'm Simon. wanna play?"
     levelUp()
+    createSureButton()
+};
+
+function createSureButton(){
     const sureButton = document.createElement("BUTTON");
-    sureButton.id = 'ready';
+    sureButton.id = 'sure';
     buttonDiv.append(sureButton);
     sureButton.innerText = 'sure!'
     sureButton.addEventListener('click', letsPlay)
-};
+}
 
 function createReadyButton(){
     const readyButton =  document.createElement("BUTTON");
@@ -62,26 +66,32 @@ function createReadyButton(){
   
 function letsPlay(){
     console.log("Let's play");
+    document.getElementById('sure').remove();
     msgEl.innerText = "it's easy: watch me, then do what I do. ready?"
-    document.getElementById('ready').innerText = 'ready!'
-    //clean up this logic - remove the button
-    //document.getElementById('ready').onClick(removeButton)
+    const readyButton =  document.createElement("BUTTON");
+    readyButton.id = 'ready';
+    buttonDiv.append(readyButton);
+    readyButton.innerText = 'ready!'
+    readyButton.addEventListener('click', simonMove);
 };
+////////breakdown point
 
-function removeButton(){
-    let buttonGone = document.getElementById('ready');
-    buttonGone.remove;
-    //make this work
-}
   
 function simonMove(){
+    //readyButton.remove();
     msgEl.innerText = "here I go..."
-    //readyButton.remove;
     let choices = ['blue', 'green', 'yellow', 'red'];
     simonChoice = choices[Math.floor(Math.random()*4)];
     simonMoves.push(simonChoice);
     playerMoves = [];
-    //simonDisplays();
+    for(move in simonMoves){
+        moveEl = document.getElementById(simonMoves[move]);
+        moveElClasses = moveEl.classList;
+        if (moveElClasses.contains('active')){
+            moveEl.classList.remove('active');
+        }
+    }  
+    simonDisplays();
 }
 
 
@@ -89,68 +99,29 @@ function simonMove(){
 //maybe yell at the player with a heading?
 
 
-function colorDisplay(){
-    gameBoard.classList.remove('active');
-    playSound();
-
-
-    for (move in simonMoves){
-        gameBoard.classList.remove('active')
-    }
-
-        }
-        if (!simonMoves.includes(move)){
-            let button = document.getElementById(move)
-            button.classList.add('active');
-        } else {
-            
-        }
-
-
-
-
-    
-    //resetAnimation() - find the ones that need to be reset
-    //timer
-   //for (move in simonMoves){
-      // var count = 0;
-      // if ()
-//   }
-
-
-      //  if (move in simonMoves){
-        //    resetAnimation();
-     //   } else {
-     //       console.log("hasn't come up yet!");
-   //     }
-   // }
-   // for (move in simonMoves){
-        //play the sound
-        //console.log(`playing ${controller[simonMoves[move]].tone}`)
-
-    }
-// };
 
 function playSound(){
     console.log(`playing ${controller[simonMoves[move]].tone}`);
-    let sound = controller[move].tone;
-    sound.play()
-    sound.currentTime=0
+    //let sound = controller[simonMoves[move]].tone;
+    //sound.play()
+    //sound.currentTime=0
 }
 
 function simonDisplays(){
-    console.log("Simon is making the game board change");
+    //console.log("Simon is making the game board change");
     //timer function of colorDisplay() for each in order.
     //make each one active in turn;
 
-
-
-        }
-        setTimeout (colorDisplay, 2000);
+    for (i=0; i< simonMoves.length; i++){
+        setTimeout(i=> {
+            moveEl = document.getElementById(simonMoves[i]);
+            moveElClasses = moveEl.classList;
+            moveEl.classList.add('active');
+            playSound();
+        }, 1000 * i, i)
     }
+}
 
-  
-  
 function playerMove(){
     //make the buttons click-able? QA would break this.
     playerMoves.push(this.id);
@@ -178,19 +149,23 @@ function compareMoves(){
   
 function youLose(){
     msgEl.innerText = "oh shit... you weren't paying attention";
-    //create replay button - init & render
-
+    const replayButton =  document.createElement("BUTTON");
+    replayButton.id = 'replay';
+    buttonDiv.append(replayButton);
+    replayButton.innerText = 'replay!'
+    replayButton.addEventListener('click', init);
 }
   
   function youDidIt(){
     console.log("sweet! winner! congrats and create ready button to make simon move again")
-    createReadyButton();
+    msgEl.innerText = 'nice job! how about I make it trickier. ready?'
+    levelUp();
+    //createReadyButton();
 }
   
 function levelUp(){
     let level = document.createElement('div');
     level.setAttribute('class', 'level');
     document.getElementById('levels').append(level);
-    level += 1;
-}
-  
+    level += 1
+};

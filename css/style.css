@@ -18,7 +18,7 @@ html * {
     margin: auto auto 50px auto;
   }
   
-  #ready {
+  #ready, #sure {
     height: 50px;
     width: 150px;
     border-radius: 12px;
@@ -32,7 +32,7 @@ html * {
     margin: 0 auto 50px auto;
   }
   
-  #ready:hover {
+  #ready:hover, #sure:hover {
     animation: glow 1s;
   }
   
@@ -76,8 +76,8 @@ html * {
     }
   }
 
-  .simonColor:active {
-      animation: lightUp 2s;
+  .active {
+      animation: lightUp 1s;
   }
 
   @keyframes lightUp {
@@ -85,7 +85,7 @@ html * {
       box-shadow: 0 0 100px -10px #ffd000;
     }
     to {
-      box-shadow: 0 0 5px 5px #ffd000 inset;
+      box-shadow: 0 0 2px 2px #ffd000 inset;
     }
   }
   
