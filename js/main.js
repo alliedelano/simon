@@ -143,11 +143,11 @@ function compareMoves(){
 }
   
 function youLose(){
-    msgEl.innerText = "oh no! you weren't paying attention! you lose. wanna play again?";
+    msgEl.innerText = "bummer. that wasn't quite it. want to play again?";
     const replayButton =  document.createElement("BUTTON");
     replayButton.id = 'replay';
     buttonDiv.append(replayButton);
-    replayButton.innerText = 'replay!'
+    replayButton.innerText = 'of course!'
     replayButton.addEventListener('click', replay);
     removeButtonListeners();
 }

@@ -1,6 +1,6 @@
 html * {
     box-sizing: border-box;
-    font-family: Verdana;
+    font-family: Epilogue, sans-serif;
   }
   
   body {
@@ -14,7 +14,14 @@ html * {
     flex-direction: column;
     justify-items: center;
     align-items: center;
-    margin: auto;
+    margin: auto 100px auto 100px;
+  }
+
+  h1 {
+    font-weight: bold;
+    font-size: 50px;
+    align-content: center;
+    text-align: center;
   }
   
   #ready, #sure, #replay {
@@ -25,6 +32,7 @@ html * {
     width: 150px;
     border-radius: 12px;
     border: #ff00dd 2px solid;
+    font-weight: bold;
   }
 
   #play-button {
@@ -77,6 +85,7 @@ html * {
 
   .active {
       animation: lightUp 1s;
+      border: black;
   }
 
   @keyframes lightUp {
@@ -97,6 +106,9 @@ html * {
     background:#FF8787;
   }
   
+  #level-header {
+    margin: auto 10px auto auto;
+  }
   
   #levels {
     display: flex;
