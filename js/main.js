@@ -24,7 +24,8 @@ const yellowButton = document.getElementById('yellow');
 const redButton = document.getElementById('red');
 const msgEl = document.getElementById('message');
 const levelEl = document.getElementById('levels');
-const buttonDiv = document.getElementById('play-button')
+const buttonDiv = document.getElementById('play-button');
+const levels = document.getElementById('levels');
 
   
 function init(){
@@ -83,6 +84,8 @@ function simonMove(){
                 moveEl.classList.remove('active');
             }
         }  
+    }, 500)
+    setTimeout(function(){
         simonDisplays();
     }, 500)
 }
@@ -142,16 +145,30 @@ function compareMoves(){
 }
   
 function youLose(){
-    msgEl.innerText = "oh shit... you weren't paying attention";
+    msgEl.innerText = "oh no! you weren't paying attention! you lose. wanna play again?";
     const replayButton =  document.createElement("BUTTON");
     replayButton.id = 'replay';
     buttonDiv.append(replayButton);
     replayButton.innerText = 'replay!'
-    replayButton.addEventListener('click', init);
+    replayButton.addEventListener('click', replay);
     removeButtonListeners();
 }
+
+function replay(){
+    document.getElementById('replay').remove();
+    resetLevels();
+    init();
+}
+
+function resetLevels(){
+    let levelDot = document.querySelectorAll('.level');
+    for (dot of levelDot){
+        dot.classList.remove('level');
+    }
+}
+
   
-  function youDidIt(){
+function youDidIt(){
     setTimeout(function(){
         msgEl.innerText = 'nice job! how about I make it trickier. ready?'
         levelUp();
@@ -163,7 +180,7 @@ function youLose(){
 function levelUp(){
     let levelIncrease = document.createElement('div');
     levelIncrease.setAttribute('class', 'level');
-    document.getElementById('levels').append(levelIncrease);
+    levels.append(levelIncrease);
     level += 1
     console.log(level)
 }

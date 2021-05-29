@@ -19,7 +19,7 @@ html * {
     flex-grow: 1;
   }
   
-  #ready, #sure {
+  #ready, #sure, #replay {
     height: 50px;
     width: 150px;
     border-radius: 12px;
