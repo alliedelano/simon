@@ -102,6 +102,9 @@ function simonDisplays(){
             moveElClasses = moveEl.classList;
             moveEl.classList.add('active');
             playSound();
+            setTimeout(i=> {
+                moveEl.classList.remove('active')
+            }, 1000 * i, i);
         }, 2000 * i, i)
     }
     setTimeout(function(){
