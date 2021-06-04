@@ -1,4 +1,4 @@
-html * {
+  html * {
     box-sizing: border-box;
     font-family: Epilogue, sans-serif;
   }
@@ -14,6 +14,7 @@ html * {
     flex-direction: column;
     justify-items: center;
     align-items: center;
+    height: 100px;
   }
 
   h1 {
@@ -22,7 +23,6 @@ html * {
     align-content: center;
     text-align: center;
     max-width: 70%;
-    margin-bottom: 2vh;
   }
   
   #ready, #sure, #replay {
@@ -37,7 +37,8 @@ html * {
   }
 
   #play-button {
-    margin: 5vh auto 7vh auto;
+    height: 50px;
+    margin: 3vh auto 3vh auto;
     display: flex;
     align-content: center;
   }
@@ -53,6 +54,7 @@ html * {
      justify-content: center;
      align-items: center;
      flex-wrap: wrap;
+     height: 350px;
   }
   
   #game-board * {
@@ -69,30 +71,32 @@ html * {
   }
   
   .color:focus {
-    animation: glow .5s;
+    animation: glow 1s;
   }
-  
-  #blue {
-    background: #87DBFF;
-  }
+
   
   @keyframes glow {
     from {
-      box-shadow: 0 0 100px -10px #ff00dd;
+      box-shadow: 0 0 100px -10px #ff00dd inset;
+      border: #ff00dd solid 10px;
     } 
   }
 
   .active {
       animation: lightUp 1s;
-      border: black;
   }
 
   @keyframes lightUp {
     from {
-      box-shadow: 0 0 100px -10px black;
+      box-shadow: 0 0 100px -10px white inset;
+      border: white solid 10px; 
     }
   }
   
+  #blue {
+    background: #87DBFF;
+  }
+
   #green {
     background: #A2F57B;
   }
@@ -109,13 +113,13 @@ html * {
     margin: auto 10px auto auto;
   }
   
-  #levels {
+  #levels, #moves {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    flex-grow: 1;
-    margin: 5vh auto auto auto;
+    height: 30px;
+    margin: 2vh auto auto auto;
   }
   
   .level {
@@ -125,6 +129,19 @@ html * {
     border-radius: 50%;
     padding: 15px;
     margin: 5px
+  }
+
+  .move {
+    height: 25px;
+    width: 25px;
+    background-color: #10FDC4;
+    border-radius: 50%;
+    padding: 15px;
+    margin: 5px
+  }
+
+  #high-score {
+    text-align: center;
   }
   
   

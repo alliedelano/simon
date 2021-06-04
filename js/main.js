@@ -15,7 +15,9 @@ const controller = {
 
 let simonMoves;
 let playerMoves;
+let playerMovesNum;
 let level;
+let highScore = 0;
   
 const gameBoard = document.getElementById('game-board');
 const blueButton = document.getElementById('blue');
@@ -26,34 +28,32 @@ const msgEl = document.getElementById('message');
 const levelEl = document.getElementById('levels');
 const buttonDiv = document.getElementById('play-button');
 const levels = document.getElementById('levels');
+const sureButtonEl = document.getElementById('sure');
+const moves = document.getElementById('moves');
 
+sureButtonEl.addEventListener('click', init)
   
 function init(){
     simonMoves = [];
     playerMoves = [];
     level = 0;
-    render();
+    renderGame();
 }
-  
-function render(){
-    msgEl.innerText = "hi, I'm Simon. wanna play?"
-    levelUp()
-    createSureButton()
-};
 
 function createSureButton(){
     const sureButton = document.createElement("BUTTON");
     sureButton.id = 'sure';
     buttonDiv.append(sureButton);
     sureButton.innerText = 'sure!'
-    sureButton.addEventListener('click', letsPlay)
+    sureButton.addEventListener('click', init)
 }
 
   
-function letsPlay(){
+function renderGame(){
     setTimeout(function(){
         document.getElementById('sure').remove();
         msgEl.innerText = "it's easy: watch me, then do what I do. ready?";
+        levelUp();
         createReadyButton();
     }, 500)
 };
@@ -82,18 +82,12 @@ function simonMove(){
                 moveEl.classList.remove('active');
             }
         }  
-    }, 500);
+    }, 200);
     setTimeout(function(){
         simonDisplays();
-    }, 1500);
+    }, 750);
 }
 
-function playSound(){
-    console.log(`playing ${controller[simonMoves[move]].tone}`);
-    //let sound = controller[simonMoves[move]].tone;
-    //sound.play()
-    //sound.currentTime=0
-}
 
 function simonDisplays(){
     for (i=0; i< simonMoves.length; i++){
@@ -101,16 +95,15 @@ function simonDisplays(){
             moveEl = document.getElementById(simonMoves[i]);
             moveElClasses = moveEl.classList;
             moveEl.classList.add('active');
-            playSound();
             setTimeout(i=> {
                 moveEl.classList.remove('active')
-            }, 1000 * i, i);
-        }, 2000 * i, i)
+            }, 200 * (i + 1), i);
+        }, 1200 * (i + 1),i);
     }
     setTimeout(function(){
         msgEl.innerText = 'your turn!'
         addButtonListeners();
-    }, 2000 * simonMoves.length);
+    }, 1200 * (simonMoves.length + 1));
 }
 
 function addButtonListeners(){
@@ -129,14 +122,14 @@ function removeButtonListeners(){
 
 function playerMove(){
     playerMoves.push(this.id);
-    compareMoves()
+    this.blur();
+    moveUp();
+    compareMoves();
 }
   
 function compareMoves(){
     for (move in playerMoves){
-        if (playerMoves[move] === simonMoves[move] && playerMoves.length != simonMoves.length){
-            console.log('not long enough yet!');
-        } else if (playerMoves[move] != simonMoves[move]) {
+        if (playerMoves[move] != simonMoves[move]) {
             youLose();
         }
     }
@@ -147,18 +140,15 @@ function compareMoves(){
   
 function youLose(){
     msgEl.innerText = "bummer. that wasn't quite it. want to play again?";
-    const replayButton =  document.createElement("BUTTON");
-    replayButton.id = 'replay';
-    buttonDiv.append(replayButton);
-    replayButton.innerText = 'of course!'
-    replayButton.addEventListener('click', replay);
+    createSureButton();
+
     removeButtonListeners();
+    resetLevels();
+    resetMoves();
 }
 
 function replay(){
-    document.getElementById('replay').remove();
-    resetLevels();
-    init();
+    document.getElementById('sure').remove();
 }
 
 function resetLevels(){
@@ -168,20 +158,41 @@ function resetLevels(){
     }
 }
 
-  
 function youDidIt(){
     setTimeout(function(){
         msgEl.innerText = 'nice job! how about I make it trickier. ready?'
         levelUp();
         removeButtonListeners();
         createReadyButton();
+        resetMoves();
     }, 500);
+    
 }
   
 function levelUp(){
     let levelIncrease = document.createElement('div');
     levelIncrease.setAttribute('class', 'level');
     levels.append(levelIncrease);
-    level += 1
-    console.log(level)
+    level += 1;
+    renderHighScore()
+}
+
+function moveUp(){
+    let moveIncrease = document.createElement('div');
+    moveIncrease.setAttribute('class', 'move');
+    moves.append(moveIncrease);
+}
+
+function resetMoves(){
+    let moveDot = document.querySelectorAll('.move');
+    for (dot of moveDot){
+        dot.classList.remove('move');
+    }
+}
+
+function renderHighScore(){
+    if (level - 1 > highScore){
+        highScore +=1;
+        document.getElementById('high-score').innerText = `High Score: ${highScore}`;
+    }
 }
