@@ -7,8 +7,8 @@ This game is based on Simon, an electronic game invented in 1978 and manufacture
 ### Screenshots
 ![simple simon start](imgs/simple_simon_start.png)
 ![simple simon instructions](imgs/simple_simon_instructions.png)
-![simple simon gameplay](simple_simon_gameplay.png)
-![simple simon loss](simple_simon_loss.png)
+![simple simon gameplay](imgs/simple_simon_gameplay.png)
+![simple simon loss](imgs/simple_simon_loss.png)
 
 ### Technologies Used:
 *HTML  
