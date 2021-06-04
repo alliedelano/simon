@@ -17,7 +17,7 @@ This game is based on Simon, an electronic game invented in 1978 and manufacture
 
 ### Getting Started:
 
-Play the game here: [Simon]()
+Play the game here: [Simon](https://alliedelano.github.io/simon/)
 
 
 ### Game Play
